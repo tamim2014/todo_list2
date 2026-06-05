@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="stylesheet" href="v2/prism.css" media="screen" />
+  <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+ /* HEADER */
+ 
+.header{
+    background: #3f51b5;
+    padding: 25px 20px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.header h2, footer h2 {
+    margin: 0;
+    
+}
+.header h2 {
+  font-weight: 300;
+}
+
+/* Ligne des champs: Conteneur des 3 elts(input#task, select#category, span "Ajouter") */
+.form-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* INPUT + SELECT + BOUTON */
+#task {
+    width: 50%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+
+#category {
+    width: 20%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+
+.addBtn {
+    width: 20%;
+    padding: 12px;
+    background: #5c6bc0;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: bold;
+    height: 44px; /* 📌 les 2 autres elts prendront ça automatiquement  */
+}
+
+/* Comment centrer verticalement le bouton Ajouter  */
+
+.addBtn {
+    display: flex;
+    align-items: center;      /* centre verticalement */
+    justify-content: center;  /* centre horizontalement */
+}
+
+
+
+
+
+
+/* LISTE */
+ul {
+    margin: 20px;
+    padding: 0;
+}
+
+ul li {
+    list-style: none;
+    background: white;
+    margin-bottom: 10px;
+    padding: 14px 50px 14px 14px;
+    border-radius: 6px;
+    font-size: 17px;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+ul li:hover {
+    /*
+	 transform: scale(1.003);
+	*/
+	transform: translateY(-2px);
+	
+}
+
+/* CHECKED */
+ul li.checked {
+    background: #c5cae9;
+    text-decoration: line-through;
+    color: #333;
+}
+
+/* BOUTON SUPPRIMER */
+.remove {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    color: #e53935;
+	
+	
+}
+
+.remove:hover {
+    color: #b71c1c;
+}
+
+/* BOUTON EDIT */
+.edit {
+    position: absolute;
+    right: 40px;
+    top: 10px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    color: #3949ab;
+}
+
+.edit:hover {
+    color: #1a237e;
+}
+/* ############################################################ */
+
+.remove, .edit{
+  padding:12px;
+}
+.edit{
+  margin-right:1em !important;
+ 
+}
+	
+/* ############################################################ */
+
+/* BADGE CATÉGORIE */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 8px;
+    color: white;
+}
+
+.badge.Travail { background: #1976d2; }
+.badge.Maison { background: #43a047; }
+.badge.Courses { background: #fb8c00; }
+.badge.Important { background: #e53935; }
+.badge.Autre { background: #757575; }
+.badge.Divers { background: green; }
+
+.remove,
+.edit,
+.addBtn {
+    transition: 0.2s ease;
+}
+
+.remove:hover,
+.edit:hover,
+.addBtn:hover {
+    background: #7986cb;
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.remove:hover,
+.edit:hover{
+    background: transparent;
+	border-radius:5px;
+}
+
+
+.date{
+  color:#bbb;  /* color:#707070;  Mine tendre */
+}
+
+/* ##################################################################### 
+     UN FOOTER POUR NOTER LES REGLES FLEXBOB UTILISEES
+######################################################################  */
+
+footer{
+    /*
+    display:flex; 
+    align-items:stretch;
+    gap:10px;
+	*/
+    color: #777;
+    background: #0a0a0a;
+	text-align:center;
+}
+
+/* 
+   Pour pouvoir mettre h1 en haut: 
+    - On ajoute un nouveau conteneur .footer-row
+    - On met les autres elts dans ce nouveau conteneur
+   Et on enleve le flexbox du header pour le mettre sur .footer-row
+*/
+
+footer .footer-row{
+  display:flex; /*📌*/
+  align-items:stretch; /*📌📌 Axe secondaire(etirement vertical)*/
+  justify-content: center;
+  
+  gap:20px;
+  
+}
+
+footer, footer .form-row > div{
+    padding:2em;
+}
+
+
+
+/* Et pour éviter que les colonnes deviennent trop petites :  */ 
+.footer-row > div {
+	flex: 1 1 250px !important; 
+	text-align:left;
+	padding:1em;
+}
+
+/* la page depasse à droite */
+	
+.footer-row > div {
+  flex: 1 1 150px !important; 
+  overflow-x:hidden ; /* 📌📌 */
+
+}
+
+.footer-row > div h4{ 
+  margin-bottom:0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.footer-row{
+	  padding:1em;
+	  flex-wrap: wrap;    /* à cause des blocs de prisme */
+	  
+	}
+
+	.footer-row > div {
+		padding:0 ;
+		font-size:0.82rem ;
+	}
+    .footer-row > div {
+	  flex: 1 1 150px !important; 
+	  overflow-x:hidden; 
+	
+    }
+  
+}
+/* ####################### Bonus: Effets de style ############################## */
+
+/* Bonus1: ???    */
+/* Bonus2: ???    */
+/* Bonus3: ???    */
+
+</style>
+<script src="v2/prism.js" defer></script>
+</head>
+<body>
+<div id="myDIV" class="header">
+    <h2>Pense-bête <small><i>(Tâches journalières ... INCHA ALLAH)</i></small></h2>
+
+    <div class="form-row">
+        <input type="text" id="task" placeholder="Nouvelle tâche...">
+
+        <select id="category">
+            <option value="Divers">Divers</option>
+            <option value="Travail">Travail</option>
+            <option value="Maison">Maison</option>
+            <option value="Courses">Courses</option>
+            <option value="Important">Important</option>
+        </select>
+
+        <span id="add" class="addBtn">Ajouter</span>
+    </div>
+</div>
+
+
+<div id="todos"></div>
+
+
+
+<footer>
+    <h2>FlexBox reversing</h2>
+	<div class="footer-row">
+		<div>
+		    <h4>La 1ere colonne est trop mince!!!</h4>
+            <pre style="margin:0 !important;"><code class="language-css">
+				footer .footer-row > div {
+					flex: 1 1 250px !important; 
+				}
+			</code></pre>
+ 			
+            <h4>Je veux aligner à gauche le contenu des div enfants<br>( avec une marge de 1em)</h4> 			
+		    <pre style="margin:0 !important;"><code class="language-css">
+			    /* On cible seulement enfants  direct(>) */
+				footer .footer-row > div {
+					text-align:left;
+					padding:1em;
+				}
+			</code></pre> 
+		    <h4>
+		       Comment "h2" est mis en haut du header?<br>
+			   Appliquer la reponse à "FlexBox reversing" 
+			</h4>
+		      Impossible il a fallu <br>
+              1) Enlever le flexbox(display:flex) du header<br>
+              2) Separer h2 en mettant les autres elts dans un nouveau conteneur(div.form-row)<br>
+              3) Remettre le flexbox dans le nouveau conteneur
+			<pre style="margin:0 !important;"><code class="language-css">
+				header{
+					/*
+					display:flex; 
+					align-items:center;
+					justify-content: center;
+					*/
+				}
+				/* On deplace le flexbox dans le nouveau div.form-row  */
+				header .form-row {
+					display: flex;
+					justify-content: center;
+				}
+			</code></pre>
+			  
+			<h4>On refait la mm chose dans ce footer<br> (pour Flexbox Reversing !)</h4> 
+            <pre style="margin:0 !important;"><code class="language-css">
+				footer{
+					/*
+					display:flex; 
+					align-items:stretch;
+					justify-content: center;
+					*/
+				}
+				footer .footer-row{
+					display:flex; /*📌*/
+					align-items:stretch; /*📌📌 Axe secondaire(etirement vertical)*/
+					justify-content: center; /* Centrer les div enfant horztlmnt */
+				}
+			</code></pre>
+		</div>
+		
+		<div>
+		    <h4>Comment input, select, et le span "Ajouter" sont centrés ?</h4>
+			<pre style="margin:0 !important;"><code class="language-css">
+			/* 
+			 * Leur conteneur:Ligne des champs
+			 * justify-content: center; 
+			 */
+			.form-row {
+				display: flex;
+				justify-content:center;/*→HORIZONTALEMENT*/
+				gap: 10px;
+			}
+			</code></pre>
+		
+		
+		   <h4>Pourquoi ces 3 elts ont la mm hauteur( alors qu'on a seulement défini Ajouter à 44px)?</h4>
+           <pre style="margin:0 !important;"><code class="language-css">
+	           /*  ??? */
+		   </code></pre>
+		
+		
+			<h4>Pourquoi le span "Ajouter" n'est pas centré comme l'input et le select?</h4>
+			<pre style="margin:0 !important;"><code class="language-css">
+	           /*  ??? */
+			</code></pre>
+			
+			<h4>Comment le centrer</h4>
+			<pre style="margin:0 !important;"><code class="language-css">
+				.addBtn { 
+					display: flex;
+					align-items: center;  /* ⭐📌 centrer verticalement */
+					justify-content: center; /*centrer horizontalement */ 
+				}
+			</code></pre>
+			<h4> Pourquoi Flexbox marche aussi bien mm sur un p'tit btn(comme le btn "Ajouter")? </h4>		
+			<p>
+				⭐ 📌Parce que Flexbox ne change pas la nature de l’élément.<br>
+				⭐ 📌Il change juste comment son contenu interne est aligné.<br>
+			</p>
+			<p>
+				Tu peux garder ça comme un mantra de dev front.  <br> 
+			   👉 Flexbox n’est pas un “layout global”, <br>
+			   👉 c’est un outil d’alignement, utilisable partout.
+			</p>
+
+		</div>
+		
+		<div>
+		   <h4>Comment la div#todos est centré???</h4>
+		    <pre style="margin:0 !important;"><code class="language-css">
+	           /*  ??? */
+			</code></pre>
+			
+			<h4>Les bloc prisme sont enorme: La page dépasse à droite</h4>
+		    <pre style="margin:0 !important;"><code class="language-css">
+			 /* 
+			  * Poser des scrolls sur les bloc prisme,
+			  * en reduisant la largeur de leurs contenairs
+			  */
+			.footer-row > div {
+			  /* Scroll sur les prisme 📌📌📌 */
+			  flex: 1 1 150px !important; 
+			  
+			  /* Evite le scroll sur les div contenairs*/
+			  overflow-x:hidden ;
+			}
+			</code></pre>
+
+		</div>
+	</div><!-- fin .footer-row   -->
+</footer>	
+
+<script src="todo-v2.js"></script>
+
+<script>
+	// Gestion du check visuel
+	document.addEventListener('click', function(ev) {
+		if (ev.target.tagName === 'LI') {
+			ev.target.classList.toggle('checked');
+		}
+	});
+</script>
+</body>
+
+</html>
+
+
