@@ -11,6 +11,13 @@ body {
     background: #f4f6f9;
 }
 
+html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+
  /* HEADER */
  
 .header{
@@ -251,18 +258,34 @@ footer, footer .form-row > div{
 
 /* Et pour éviter que les colonnes deviennent trop petites :  */ 
 .footer-row > div {
-	flex: 1 1 250px !important; 
+	/* flex: 1 1 250px !important; */ 
 	text-align:left;
 	padding:1em;
 }
 
 /* la page depasse à droite */
-	
+/*	
 .footer-row > div {
-  flex: 1 1 150px !important; 
-  overflow-x:hidden ; /* 📌📌 */
-
+  flex: 1 1 150px; 
+  overflow-x:hidden ; 
 }
+
+.footer-row > div {
+  flex: 1 0 150px; 
+
+  min-height: auto; 
+}
+*/
+
+.footer-row > div {
+    flex: 0 1 150px; /* shrink OUI, grow NON */
+
+    min-height: auto; /* laisse respirer */
+    padding-inline: 10px !important; /* ⭐⭐ LA SOLUTION ⭐⭐ */
+    box-sizing: border-box; /* pour éviter les débordements */
+}
+
+
 
 .footer-row > div h4{ 
   margin-bottom:0;
@@ -288,11 +311,271 @@ footer, footer .form-row > div{
 
   
 }
-/* ####################### Bonus: Effets de style ############################## */
+/* ####################### Bonus: Effets de style sur le checked ############################## */
 
-/* Bonus1: ???    */
-/* Bonus2: ???    */
-/* Bonus3: ???    */
+/* 
+* Bonus1: ✨ une animation de fondu   
+* Bonus3: 💥 un effet “pouf” façon Trello
+* Bonus4: ✔️ un checkmark animé
+* Bonus5: 🌫️ un fade-out progressif AVANT SUPPRESSION
+* Bonus6: 🎯 un effet “done” ultra propre 
+* Bonus7: 🎵 un petit son discret  
+*/ 
+
+  
+/* ✔ Bonus1: ✨ une animation de fondu */
+
+/* Animation de fondu */
+@keyframes fadeChecked {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+@keyframes fadeUncheck {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Quand la tâche est cochée */
+li.checked {
+    opacity: 0.5;
+    text-decoration: line-through;
+    animation: fadeChecked 0.3s ease forwards;
+}
+
+/* Quand elle est décochée */
+li.unchecked {
+    animation: fadeUncheck 0.3s ease forwards;
+}
+
+
+
+
+/* ✔ Bonus3: 💥 un effet “pouf” façon Trello */
+/* Effet POUF quand on coche */
+@keyframes pouf {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    40% {
+        transform: scale(0.92);
+        opacity: 0.6;
+    }
+    70% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Classe appliquée juste au moment du pouf */
+li.pouf {
+    animation: pouf 0.28s ease-out forwards;
+}
+
+
+/* ✔ Bonus4: ✔️ un checkmark animé */
+/* Conteneur du check animé */
+li .checkmark {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+}
+
+/* Le trait du check */
+li .checkmark::after {
+    content: "";
+    width: 6px;
+    height: 12px;
+    border-right: 2px solid #4caf50;
+    border-bottom: 2px solid #4caf50;
+    transform: scale(0) rotate(45deg);
+    transform-origin: center;
+    transition: transform 0.25s ease-out;
+
+    /* AJUSTEMENT PIXEL-PERFECT */
+    position: absolute;
+    top: 1px;      /* ← décale légèrement vers le haut */
+    left: 5px;     /* ← reste centré horizontalement */
+}
+
+
+/* Quand la tâche est cochée → le check s’anime */
+li.checked .checkmark::after {
+    transform: scale(1) rotate(45deg);
+}
+
+
+/* ✔ Bonus5: 🌫️ un fade-out progressif AVANT SUPPRESSION*/ 
+
+/* Fade-out progressif + léger slide */
+@keyframes fadeOutSlide {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(8px);
+    }
+    70% {
+        opacity: 0.3;
+        transform: translateX(14px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* Classe appliquée juste avant suppression */
+li.fade-out {
+  animation: fadeOutSlide 0.9s ease-out forwards;
+}
+
+
+/* ✔ Bonus6: 🎯 un effet “done” ultra propre */ 
+
+/* Halo vert de validation */
+@keyframes doneGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(76, 175, 80, 0);
+    }
+    40% {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 0px rgba(76, 175, 80, 0);
+    }
+}
+
+/* Classe appliquée juste après le check */
+li.done-glow {
+    animation: doneGlow 0.6s ease-out forwards;
+}
+
+/* ✔ Bonus7: 🎵 un petit son discret 🎧*/ 
+
+/* ####################################################  */
+
+/*
+🧠 Intelligence UX
+Auto‑tri :
+
+
+les tâches cochées descendent
+
+les urgentes montent
+
+les catégories se regroupent
+*/
+
+/* ####################################################  */
+
+/* Le rendre repliable (comme un panneau d’admin)   */
+
+.btnToggleNotes {
+    display: block;
+    width: 100%;              /* toute la largeur */
+    margin: 0;                /* collé aux notes */
+    padding: 14px 0;          /* hauteur propre */
+    
+    background: #111;         /* style footer */
+    color: #fff;
+    border: none;
+    border-radius: 0;         /* pas de coins arrondis */
+    
+    font-size: 1.1em;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.btnToggleNotes {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.btnToggleNotes:hover {
+   background: #444;
+}
+
+
+
+
+
+
+.footer-notes {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: #222;
+    color: #ddd;
+    padding: 0 15px; /* pas de padding vertical quand fermé */
+}
+
+.footer-notes.open {
+    max-height: 3000px; /* assez grand pour tout ton contenu */
+    padding: 15px;      /* padding réactivé quand ouvert */
+}
+
+
+.footer-notes {
+    background: #222;
+    color: #ddd;
+    /* padding: 15px;*/
+	padding: 0 15px;
+    margin: 0; /* collé au bouton */
+    border-top: 1px solid #333;
+	border-radius:none !important;
+}
+
+/* Les bloc prisme sont enorme: La page dépasse à droite  */
+.footer-row > div {
+  /* Scroll sur les prisme 📌📌📌 */
+  flex: 1 1 150px !important;
+
+  /* Evite le scroll sur les div contenairs*/
+  overflow-x:hidden ;
+}
+
+/* 
+Voici la version “anti‑Prism” que les devs utilisent dans les dashboards :
+*/
+
+.footer-notes pre,
+.footer-notes code {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-sizing: border-box;
+}
+
+ 
 
 </style>
 <script src="v2/prism.js" defer></script>
@@ -316,15 +599,21 @@ footer, footer .form-row > div{
     </div>
 </div>
 
+<!--
+<div id="todos"></div>
+-->
 
 <div id="todos"></div>
 
+<button class="btnToggleNotes" onclick="toggleNotes()">
+    Notes ...
+</button>
 
 
-<footer>
+<footer id="notes" class="footer-notes" >
     <h2>Flexbox reversing</h2>
-	<div class="footer-row">
-		<div>
+	<div class="footer-row" >
+		<div >
 		    <h4>Un "footer-note" en 3 colonnes</h4>
             <pre style="margin:0 !important;"><code class="language-css">
 			footer{
@@ -514,9 +803,8 @@ footer, footer .form-row > div{
 			
 			<h4>✔ Bonus1: ✨ une animation de fondu</h4>
 		    <pre style="margin:0 !important;"><code class="language-css">
-			 /* 
+			 /* 🛰️
 			  * ✔ Bonus1: ✨ une animation de fondu
-			  * ✔ Bonus2: ➡️ un slide vers la droite
 			  * ✔ Bonus3: 💥 un effet “pouf” façon Trello
 			  * ✔ Bonus4: ✔️ un checkmark animé
 			  * ✔ Bonus5: 🎵 un petit son discret
