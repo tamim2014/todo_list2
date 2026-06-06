@@ -1,20 +1,19 @@
-
-const PAGE_PREFIX = "pensebete_";
-
 // ===============================
 //  CONFIG
 // ===============================
-const TODO_KEY = PAGE_PREFIX + "todos"; 
-let editIndex = null; // Pour le mode édition
+
+const PAGE_PREFIX = "pensebete_";
+const TODO_KEY = PAGE_PREFIX + "todos";
+let editIndex = null;
+
 
 // ===============================
 //  UTILITAIRES
 // ===============================
 
-// Convertit un timestamp en "il y a X minutes"
 function timeAgo(timestamp) {
     const now = Date.now();
-    const diff = Math.floor((now - timestamp) / 1000); // en secondes
+    const diff = Math.floor((now - timestamp) / 1000);
 
     if (diff < 60) return "il y a quelques secondes";
     if (diff < 3600) return `il y a ${Math.floor(diff / 60)} minutes`;
@@ -23,92 +22,63 @@ function timeAgo(timestamp) {
     return "il y a longtemps";
 }
 
-// Récupère les tâches
 function getTodos() {
     const data = localStorage.getItem(TODO_KEY);
     return data ? JSON.parse(data) : [];
 }
 
-// Sauvegarde
 function saveTodos(todos) {
     localStorage.setItem(TODO_KEY, JSON.stringify(todos));
 }
 
+
 // ===============================
 //  AJOUT / MODIFICATION
 // ===============================
-function addOrEdit() {
-    console.clear();
-    console.log("=== DEBUG addOrEdit() ===");
 
+function addOrEdit() {
     let taskInput = document.getElementById("task");
     let categoryInput = document.getElementById("category");
     let addBtn = document.getElementById("add");
 
-    console.log("taskInput =", taskInput);
-    console.log("categoryInput =", categoryInput);
-    console.log("addBtn =", addBtn);
-
-    if (!taskInput) {
-        console.error("❌ ERREUR : #task introuvable dans le DOM");
-        return;
-    }
-    if (!categoryInput) {
-        console.error("❌ ERREUR : #category introuvable dans le DOM");
-        return;
-    }
-
     let text = taskInput.value.trim();
     let category = categoryInput.value;
-
-    console.log("text =", text);
-    console.log("category =", category);
-    console.log("editIndex =", editIndex);
 
     if (text === "") {
         alert("Vous n'avez rien écrit !");
         return;
     }
 
-    if (!category) {
-        console.warn("⚠️ Catégorie vide → forcée à Divers");
-        category = "Divers";
-    }
+    if (!category) category = "Divers";
 
     let todos = getTodos();
-    console.log("todos avant =", todos);
 
     if (editIndex !== null) {
-        console.log("MODE EDITION");
         todos[editIndex].text = text;
         todos[editIndex].category = category;
         editIndex = null;
         addBtn.textContent = "Ajouter";
     } else {
-        console.log("MODE AJOUT");
         todos.push({
             text: text,
             category: category,
-            created_at: Date.now()
+            created_at: Date.now(),
+            checked: false
         });
     }
-
-    console.log("todos après =", todos);
 
     saveTodos(todos);
     showTodos();
 
     taskInput.value = "";
     categoryInput.value = "Divers";
-
-    console.log("=== FIN DEBUG ===");
 }
-
 
 
 // ===============================
 //  SUPPRESSION
 // ===============================
+
 function removeTodo(index) {
     let todos = getTodos();
     todos.splice(index, 1);
@@ -116,9 +86,11 @@ function removeTodo(index) {
     showTodos();
 }
 
+
 // ===============================
 //  MODE ÉDITION
 // ===============================
+
 function editTodo(index) {
     const todos = getTodos();
     const t = todos[index];
@@ -130,9 +102,11 @@ function editTodo(index) {
     document.getElementById("add").textContent = "Modifier";
 }
 
+
 // ===============================
 //  AFFICHAGE
 // ===============================
+
 function showTodos() {
     const todos = getTodos();
     let html = "<ul>";
@@ -142,7 +116,7 @@ function showTodos() {
         const formatted = date.toLocaleString();
 
         html += `
-            <li>
+            <li class="${t.checked ? "checked" : ""}" onclick="toggleChecked(${i})">
                 <span class="badge ${t.category}">${t.category}</span>
                 ${t.text}
                 <br>
@@ -150,8 +124,8 @@ function showTodos() {
                     Ajouté le ${formatted} (${timeAgo(t.created_at)})
                 </small>
 
-                <button class="edit" onclick="editTodo(${i})">✏️</button>
-                <button class="remove" onclick="removeTodo(${i})">❌</button>
+                <button class="edit" onclick="event.stopPropagation(); editTodo(${i})">✏️</button>
+                <button class="remove" onclick="event.stopPropagation(); removeTodo(${i})">❌</button>
             </li>
         `;
     });
@@ -160,8 +134,22 @@ function showTodos() {
     document.getElementById("todos").innerHTML = html;
 }
 
+
+// ===============================
+//  CHECKED PERSISTANT
+// ===============================
+
+function toggleChecked(index) {
+    let todos = getTodos();
+    todos[index].checked = !todos[index].checked;
+    saveTodos(todos);
+    showTodos();
+}
+
+
 // ===============================
 //  INIT
 // ===============================
+
 document.getElementById("add").addEventListener("click", addOrEdit);
 showTodos();

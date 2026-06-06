@@ -29,7 +29,12 @@ body {
   font-weight: 300;
 }
 
-/* Ligne des champs: Conteneur des 3 elts(input#task, select#category, span "Ajouter") */
+/* 
+ * Nouvelle ligne flex pour les champs 
+ *
+ * Ligne des champs: Conteneur des 3 elts(input#task, select#category, span "Ajouter") 
+ *
+ */
 .form-row {
     display: flex;
     gap: 10px;
@@ -200,19 +205,26 @@ ul li.checked {
   color:#bbb;  /* color:#707070;  Mine tendre */
 }
 
+footer h2{
+  color:#aaa;
+}
+
 /* ##################################################################### 
      UN FOOTER POUR NOTER LES REGLES FLEXBOB UTILISEES
 ######################################################################  */
 
 footer{
-    /*
+    /*******************************
+	Pour ajouter un titre:  On déplace ça dans un sous-contenair
     display:flex; 
     align-items:stretch;
+	justify-content: center;
     gap:10px;
-	*/
+	*********************************/
+	
     color: #777;
     background: #0a0a0a;
-	text-align:center;
+	text-align:center; /* Centrer h2  */
 }
 
 /* 
@@ -223,9 +235,9 @@ footer{
 */
 
 footer .footer-row{
-  display:flex; /*📌*/
-  align-items:stretch; /*📌📌 Axe secondaire(etirement vertical)*/
-  justify-content: center;
+  display:flex; 
+  align-items:stretch; /* Axe secondaire(etirement vertical) */
+  justify-content: center; /* Centrer horizontalmnt les div */
   
   gap:20px;
   
@@ -273,6 +285,7 @@ footer, footer .form-row > div{
 	  overflow-x:hidden; 
 	
     }
+
   
 }
 /* ####################### Bonus: Effets de style ############################## */
@@ -309,12 +322,22 @@ footer, footer .form-row > div{
 
 
 <footer>
-    <h2>FlexBox reversing</h2>
+    <h2>Flexbox reversing</h2>
 	<div class="footer-row">
 		<div>
-		    <h4>La 1ere colonne est trop mince!!!</h4>
+		    <h4>Un "footer-note" en 3 colonnes</h4>
             <pre style="margin:0 !important;"><code class="language-css">
-				footer .footer-row > div {
+			footer{
+				display:flex; 
+				align-items:stretch;
+				justify-content: center; 
+				gap:10px;
+			}
+			</code></pre>
+			
+			<h4>La 1ere colonne est trop mince!</h4>
+            <pre style="margin:0 !important;"><code class="language-css">
+				footer > div {
 					flex: 1 1 250px !important; 
 				}
 			</code></pre>
@@ -322,36 +345,18 @@ footer, footer .form-row > div{
             <h4>Je veux aligner à gauche le contenu des div enfants<br>( avec une marge de 1em)</h4> 			
 		    <pre style="margin:0 !important;"><code class="language-css">
 			    /* On cible seulement enfants  direct(>) */
-				footer .footer-row > div {
+				footer  > div {
 					text-align:left;
 					padding:1em;
 				}
-			</code></pre> 
-		    <h4>
-		       Comment "h2" est mis en haut du header?<br>
-			   Appliquer la reponse à "FlexBox reversing" 
-			</h4>
-		      Impossible il a fallu <br>
-              1) Enlever le flexbox(display:flex) du header<br>
-              2) Separer h2 en mettant les autres elts dans un nouveau conteneur(div.form-row)<br>
-              3) Remettre le flexbox dans le nouveau conteneur
-			<pre style="margin:0 !important;"><code class="language-css">
-				header{
-					/*
-					display:flex; 
-					align-items:center;
-					justify-content: center;
-					*/
-				}
-				/* On deplace le flexbox dans le nouveau div.form-row  */
-				header .form-row {
-					display: flex;
-					justify-content: center;
-				}
 			</code></pre>
-			  
-			<h4>On refait la mm chose dans ce footer<br> (pour Flexbox Reversing !)</h4> 
-            <pre style="margin:0 !important;"><code class="language-css">
+
+            <h4>Comment ajouter un titre "h2" en haut du footer</h4>
+		      1) Isoler h2 <br> 
+			  2) Mettre le reste dans un sous-contenair(.footer-row)<br>
+              3) Migrer le flexbox: header → div.footer-row	
+			<pre style="margin:0 0 .2em 0 !important;"><code class="language-css">
+			/* On avait ce contenair, mais ça marche pas */
 				footer{
 					/*
 					display:flex; 
@@ -359,10 +364,40 @@ footer, footer .form-row > div{
 					justify-content: center;
 					*/
 				}
-				footer .footer-row{
-					display:flex; /*📌*/
-					align-items:stretch; /*📌📌 Axe secondaire(etirement vertical)*/
-					justify-content: center; /* Centrer les div enfant horztlmnt */
+			</code></pre>
+			
+			<pre style="margin:0 !important;"><code class="language-css">
+			/* Alors on deplace le flexbox dans un sous-contenair*/
+				footer .footer-row {
+					display: flex;
+					align-items:stretch; /* 📌 */
+					justify-content: center;
+				}
+			</code></pre>
+
+
+			
+		    <h4>
+		       Comment ajouter un titre "h2" en haut du header? 
+			</h4>
+		      1) Isoler h2 <br> 
+			  2) Mettre le reste dans un sous-contenair(.form-row)<br>
+              3) Migrer le flexbox: header → div.form-row
+			<pre style="margin:margin:0 0 .2em 0 !important;"><code class="language-css">
+			/* On avait ce contenair, mais ça marche pas */
+				header{
+					/*
+					display:flex; 
+					align-items:center;  📌 
+					justify-content: center;
+					*/
+				}
+			</code></pre>
+			<pre style="margin:0 !important;"><code class="language-css">
+			/* Alors on deplace le flexbox dans un sous-contenair*/
+				header .form-row {
+					display: flex;
+					justify-content: center;
 				}
 			</code></pre>
 		</div>
@@ -371,7 +406,7 @@ footer, footer .form-row > div{
 		    <h4>Comment input, select, et le span "Ajouter" sont centrés ?</h4>
 			<pre style="margin:0 !important;"><code class="language-css">
 			/* 
-			 * Leur conteneur:Ligne des champs
+			 * Leur conteneur(Ligne des champs): En flex
 			 * justify-content: center; 
 			 */
 			.form-row {
@@ -384,13 +419,36 @@ footer, footer .form-row > div{
 		
 		   <h4>Pourquoi ces 3 elts ont la mm hauteur( alors qu'on a seulement défini Ajouter à 44px)?</h4>
            <pre style="margin:0 !important;"><code class="language-css">
-	           /*  ??? */
+		  /*  
+			* Flexbox aligne les hauteurs automatiquement.
+			*
+			* Un conteneur flexbox applique par défaut:
+			* ✔️ align-items: stretch;
+			*
+			*  Ce qui veut dire :
+			*  "Tous les enfants prennent la même hauteur 
+			*   que le plus grand."
+			*	
+			* Attention!
+			* 👉 stretch(par défaut) ne s’applique que si 
+			* 👉 les enfants n’ont PAS de hauteur définie
+			*  			
+			*/
 		   </code></pre>
 		
 		
-			<h4>Pourquoi le span "Ajouter" n'est pas centré comme l'input et le select?</h4>
+			<h4>Pourquoi le contenu du span ("Ajouter") n'est pas centré verticalement comme l'input et le select?</h4>
 			<pre style="margin:0 !important;"><code class="language-css">
-	           /*  ??? */
+		  /*  
+			* #task et #category sont des 
+			* éléments de formulaire natifs (input, select)
+			*
+			* → leur rendu interne est géré par le navigateur
+			* → le texte est centré verticalement dans la “zone de contrôle”, 
+			*   pas juste dans la boîte CSS
+			*				
+			*/
+		   </code></pre>
 			</code></pre>
 			
 			<h4>Comment le centrer</h4>
@@ -415,14 +473,20 @@ footer, footer .form-row > div{
 		</div>
 		
 		<div>
-		   <h4>Comment la div#todos est centré???</h4>
+		   <h4>Comment la div#todos est centré?</h4>
 		    <pre style="margin:0 !important;"><code class="language-css">
-	           /*  ??? */
+	            /* ✔ margin:20px */
+			ul {
+				margin: 20px;
+				padding: 0; /* Regler les paddings ds li */
+			}
 			</code></pre>
 			
 			<h4>Les bloc prisme sont enorme: La page dépasse à droite</h4>
 		    <pre style="margin:0 !important;"><code class="language-css">
 			 /* 
+			  * ✔ basis à 150
+			  *
 			  * Poser des scrolls sur les bloc prisme,
 			  * en reduisant la largeur de leurs contenairs
 			  */
@@ -433,6 +497,32 @@ footer, footer .form-row > div{
 			  /* Evite le scroll sur les div contenairs*/
 			  overflow-x:hidden ;
 			}
+			</code></pre>
+			
+			<h4>Ameliorations possibles: Rendu checked</h4>
+		    <pre style="margin:0 !important;"><code class="language-css">
+			 /* 
+			  * ✔ Bonus1: ✨ une animation de fondu
+			  * ✔ Bonus2: ➡️ un slide vers la droite
+			  * ✔ Bonus3: 💥 un effet “pouf” façon Trello
+			  * ✔ Bonus4: ✔️ un checkmark animé
+			  * ✔ Bonus5: 🎵 un petit son discret
+			  * ✔ Bonus6: 🌫️ un fade-out progressif
+			  * ✔ Bonus7: 🎯 un effet “done” ultra propre
+			  */
+			</code></pre>
+			
+			<h4>✔ Bonus1: ✨ une animation de fondu</h4>
+		    <pre style="margin:0 !important;"><code class="language-css">
+			 /* 
+			  * ✔ Bonus1: ✨ une animation de fondu
+			  * ✔ Bonus2: ➡️ un slide vers la droite
+			  * ✔ Bonus3: 💥 un effet “pouf” façon Trello
+			  * ✔ Bonus4: ✔️ un checkmark animé
+			  * ✔ Bonus5: 🎵 un petit son discret
+			  * ✔ Bonus6: 🌫️ un fade-out progressif
+			  * ✔ Bonus7: 🎯 un effet “done” ultra propre
+			  */
 			</code></pre>
 
 		</div>
