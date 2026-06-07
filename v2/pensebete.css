@@ -192,7 +192,7 @@ ul li.checked {
 .badge.Courses { background: #fb8c00; }
 .badge.Important { background: #e53935; }
 .badge.Autre { background: #757575; }
-.badge.Divers { background: green; }
+.badge.Divers { background: #5c6ac0; }
 
 .remove,
 .edit,
