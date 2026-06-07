@@ -1,3 +1,16 @@
+/*
+ * Garges-Les-Gonesses
+ * Dimanche 07.06.20026
+ *
+ * 🧠 Intelligence UX: Auto‑tri
+ *    🟦 les tâches cochées descendent
+ *    🟦 les urgentes montent
+ *    🟦 les catégories se regroupent
+ *
+ */
+
+
+
 // ===============================
 //  CONFIG
 // ===============================

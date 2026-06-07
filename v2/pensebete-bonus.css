@@ -1,0 +1,173 @@
+/* ####################### Bonus: Effets de style sur le checked ############################## */
+
+/* 
+* Bonus1: ✨ une animation de fondu   
+* Bonus3: 💥 un effet “pouf” façon Trello
+* Bonus4: ✔️ un checkmark animé
+* Bonus5: 🌫️ un fade-out progressif AVANT SUPPRESSION
+* Bonus6: 🎯 un effet “done” ultra propre 
+* Bonus7: 🎵 un petit son discret  
+*/ 
+
+  
+/* ✔ Bonus1: ✨ une animation de fondu */
+
+/* Animation de fondu */
+@keyframes fadeChecked {
+    from {
+         opacity: 1; 
+    }
+    to {
+       opacity: 0.5; 
+    }
+}
+
+@keyframes fadeUncheck {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+
+/* Quand la tâche est cochée */
+li.checked {
+   /*
+    Je vire l'animation de fondu
+    opacity: 0.5; 
+    animation: fadeChecked 0.3s ease forwards;
+  */
+    /* Je remet un autre truc */
+	  text-decoration: line-through;
+      color: #333 !important;
+	  background: #999 !important; /* #c5cae9 */
+	
+}
+
+/* Quand elle est décochée */
+li.unchecked {
+    animation: fadeUncheck 0.3s ease forwards;
+}
+
+
+
+
+/* ✔ Bonus3: 💥 un effet “pouf” façon Trello */
+/* Effet POUF quand on coche */
+@keyframes pouf {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    40% {
+        transform: scale(0.92);
+        opacity: 0.6;
+    }
+    70% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Classe appliquée juste au moment du pouf */
+li.pouf {
+    animation: pouf 0.28s ease-out forwards;
+}
+
+
+/* ✔ Bonus4: ✔️ un checkmark animé */
+/* Conteneur du check animé */
+li .checkmark {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+}
+
+/* Le trait du check */
+li .checkmark::after {
+    content: "";
+    width: 6px;
+    height: 12px;
+    border-right: 2px solid #4caf50;
+    border-bottom: 2px solid #4caf50;
+    transform: scale(0) rotate(45deg);
+    transform-origin: center;
+    transition: transform 0.25s ease-out;
+
+    /* AJUSTEMENT PIXEL-PERFECT */
+    position: absolute;
+    top: 1px;      /* ← décale légèrement vers le haut */
+    left: 5px;     /* ← reste centré horizontalement */
+}
+
+
+/* Quand la tâche est cochée → le check s’anime */
+li.checked .checkmark::after {
+    transform: scale(1) rotate(45deg);
+}
+
+
+/* ✔ Bonus5: 🌫️ un fade-out progressif AVANT SUPPRESSION*/ 
+
+/* Fade-out progressif + léger slide */
+@keyframes fadeOutSlide {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(8px);
+    }
+    70% {
+        opacity: 0.3;
+        transform: translateX(14px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* Classe appliquée juste avant suppression */
+li.fade-out {
+  animation: fadeOutSlide 0.9s ease-out forwards;
+}
+
+
+/* ✔ Bonus6: 🎯 un effet “done” ultra propre */ 
+
+/* Halo vert de validation */
+@keyframes doneGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(76, 175, 80, 0);
+    }
+    40% {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 0px rgba(76, 175, 80, 0);
+    }
+}
+
+/* Classe appliquée juste après le check */
+li.done-glow {
+    animation: doneGlow 0.6s ease-out forwards;
+}
+
+/* ✔ Bonus7: 🎵 un petit son discret 🎧 => fait en js */ 
