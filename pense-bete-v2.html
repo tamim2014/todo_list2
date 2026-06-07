@@ -47,12 +47,32 @@
 		<div >
 		    <h4>Un "footer-note" en 3 colonnes</h4>
             <pre style="margin:0 !important;"><code class="language-css">
+			/*
+			 * 🟦 justifie-content: Divs enfants
+			 *  → (gauche,droite,centre)
+			 * 🟦 align-items: Contenus des div enfants
+			 *  → (haut,bas,milieu, ou tiré vers le bas)
+			 */
 			footer{
-				display:flex; 
-				align-items:stretch;
-				justify-content: center; 
+				display:flex;/*flex-direction:row; Par défaut*/ 
+				justify-content: center;  /* Composants📌 */
+				align-items:stretch;     /* Contenus📌 */
 				gap:10px;
 			}
+			</code></pre>
+			
+			<h4>Difference  align-items et text-align?</h4>
+            <pre style="margin:0 !important;"><code class="language-css">
+			/*
+			 * 🟦 align-items: Contenus des div enfants
+			 *    → Porté par le parent
+			 *    → haut,bas,milieu, ou tiré vers le bas
+			 *    → (Si flexbox)
+			 *
+			 * 🟦 text-align: Contenus des div enfants
+			 *    → Porté par l'enfant
+			 *    → gauche,droite,centre
+			 */
 			</code></pre>
 			
 			<h4>La 1ere colonne est trop mince!</h4>
@@ -79,9 +99,9 @@
 			/* On avait ce contenair, mais ça marche pas */
 				footer{
 					/*
-					display:flex; 
+					display:flex;
+                    justify-content: center;					
 					align-items:stretch;
-					justify-content: center;
 					*/
 				}
 			</code></pre>
@@ -89,9 +109,9 @@
 			<pre style="margin:0 !important;"><code class="language-css">
 			/* Alors on deplace le flexbox dans un sous-contenair*/
 				footer .footer-row {
-					display: flex;
-					align-items:stretch; /* 📌 */
+					display: flex; /* flexbox */
 					justify-content: center;
+					align-items:stretch; /* 📌 */
 				}
 			</code></pre>
 
@@ -107,9 +127,9 @@
 			/* On avait ce contenair, mais ça marche pas */
 				header{
 					/*
-					display:flex; 
+					display:flex;
+                    justify-content: center;					
 					align-items:center;  📌 
-					justify-content: center;
 					*/
 				}
 			</code></pre>
@@ -176,8 +196,8 @@
 			<pre style="margin:0 !important;"><code class="language-css">
 				.addBtn { 
 					display: flex;
-					align-items: center;  /* ⭐📌 Verticalement */
 					justify-content: center; /* Horizontalement */ 
+					align-items: center;  /* ⭐📌 Verticalement */
 				}
 			</code></pre>
 			<h4> Pourquoi Flexbox marche aussi bien mm sur un p'tit btn(comme le btn "Ajouter")? </h4>		

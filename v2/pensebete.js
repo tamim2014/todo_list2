@@ -49,8 +49,8 @@ function playUncheckSound() {
     const gain = ctx.createGain();
 
     osc.type = "triangle";
-    osc.frequency.value = 600;
-    gain.gain.value = 0.10;
+    osc.frequency.value = 604; /* trop bas on capte presque r1 si y a d'autre son sur pc mais ça va  */
+    gain.gain.value = 0.10;   
 
     osc.connect(gain);
     gain.connect(ctx.destination);
