@@ -56,7 +56,7 @@
 			footer{
 				display:flex;/*flex-direction:row; Par défaut*/ 
 				justify-content: center;  /* Composants📌 */
-				align-items:stretch;     /* Contenus📌 */
+				align-items:stretch;/*Contenus📌Axe 2daire*/
 				gap:10px;
 			}
 			</code></pre>
@@ -67,7 +67,7 @@
 			 * 🟦 align-items: Contenus des div enfants
 			 *    → Porté par le parent
 			 *    → haut,bas,milieu, ou tiré vers le bas
-			 *    → (Si flexbox)
+			 *    → (Si flex-direction:row)
 			 *
 			 * 🟦 text-align: Contenus des div enfants
 			 *    → Porté par l'enfant
@@ -97,13 +97,13 @@
               3) Migrer le flexbox: header → div.footer-row	
 			<pre style="margin:0 0 .2em 0 !important;"><code class="language-css">
 			/* On avait ce contenair, mais ça marche pas */
-				footer{
-					/*
-					display:flex;
-                    justify-content: center;					
-					align-items:stretch;
-					*/
-				}
+			    footer{
+				  /*
+				   * display: flex ;
+       * justify-content: center;  					
+				   * align-items: stretch; 📌
+				   */
+			    }
 			</code></pre>
 			
 			<pre style="margin:0 !important;"><code class="language-css">
@@ -126,11 +126,11 @@
 			<pre style="margin:margin:0 0 .2em 0 !important;"><code class="language-css">
 			/* On avait ce contenair, mais ça marche pas */
 				header{
-					/*
-					display:flex;
-                    justify-content: center;					
-					align-items:center;  📌 
-					*/
+				  /*
+				   * display: flex ;
+       * justify-content: center;  					
+				   * align-items: stretch; 📌
+				   */
 				}
 			</code></pre>
 			<pre style="margin:0 !important;"><code class="language-css">
