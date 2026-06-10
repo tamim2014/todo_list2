@@ -193,6 +193,7 @@ ul li.checked {
 .badge.Important { background: #e53935; }
 .badge.Autre { background: #757575; }
 .badge.Divers { background: #5c6ac0; }
+.badge.Projets { background: #555; }
 
 .remove,
 .edit,
@@ -346,7 +347,7 @@ footer, footer .form-row > div{
 
 
 .footer-notes {
-    max-height: 0;
+    max-height: 0; /* On le cache */
     overflow: hidden;
     transition: max-height 0.4s ease;
     background: #222;
@@ -355,7 +356,7 @@ footer, footer .form-row > div{
 }
 
 .footer-notes.open {
-    max-height: 10000px; /* assez grand pour tout ton contenu */
+    max-height: 10000px; /* On l'ouvre: assez grand pour tout ton contenu */
     padding: 15px;      /* padding réactivé quand ouvert */
 }
 
